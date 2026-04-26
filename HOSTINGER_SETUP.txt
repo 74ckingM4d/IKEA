@@ -1,0 +1,114 @@
+═══════════════════════════════════════════════════════════════
+  IKEA COMMISSARY - HOSTINGER DEPLOYMENT QUICK START
+═══════════════════════════════════════════════════════════════
+
+STEP 1: CREATE DATABASE ON HOSTINGER
+─────────────────────────────────────
+1. Log in to Hostinger hPanel
+2. Go to: Databases → MySQL Databases
+3. Create a new database (note the name, e.g., u123456789_ikea_inventory)
+4. Create a new database user (note username and password)
+5. Grant the user access to the database
+
+STEP 2: IMPORT DATABASE
+────────────────────────
+1. In hPanel, open phpMyAdmin
+2. Select your database from the left sidebar
+3. Click the "Import" tab
+4. Choose file: database/schema.sql
+5. Click "Go" to import
+6. Verify tables were created (should see: inventory_items, users, purchases, etc.)
+
+STEP 3: UPLOAD FILES
+────────────────────
+Option A - Using File Manager:
+1. In hPanel, go to: Files → File Manager
+2. Navigate to: public_html (or your domain folder)
+3. Upload all project files maintaining the folder structure
+
+Option B - Using FTP:
+- Host: ftp.yourdomain.com (or IP from Hostinger)
+- Username: Your FTP username
+- Password: Your FTP password
+- Port: 21
+- Upload to: public_html/
+
+IMPORTANT: Maintain this folder structure:
+  public_html/
+  ├── api/
+  ├── assets/
+  ├── backend/
+  ├── config/
+  ├── css/
+  ├── database/
+  ├── js/
+  ├── uploads/
+  └── *.php files
+
+STEP 4: CONFIGURE DATABASE CONNECTION
+──────────────────────────────────────
+1. On Hostinger, edit: config/database.php
+2. Update the PRODUCTION section (lines 24-29) with your credentials:
+
+   'host' => 'localhost',  // Usually 'localhost' on Hostinger
+   'dbname' => 'YOUR_DATABASE_NAME',  // From Step 1
+   'username' => 'YOUR_DB_USERNAME',  // From Step 1
+   'password' => 'YOUR_DB_PASSWORD',  // From Step 1
+
+3. Save the file
+
+STEP 5: SET PERMISSIONS
+───────────────────────
+1. Set uploads/ folder to 755 (or 775)
+2. PHP files should be 644
+3. Folders should be 755
+
+STEP 6: TEST YOUR SITE
+──────────────────────
+1. Visit: https://yourdomain.com/login.php
+2. Login with:
+   Username: admin
+   Password: password123
+3. Test key features:
+   ✓ Dashboard loads
+   ✓ Can view inventory
+   ✓ Can upload receipts
+   ✓ All pages accessible
+
+STEP 7: SECURITY (IMPORTANT!)
+──────────────────────────────
+1. Change default admin password immediately
+2. Change all user passwords
+3. Enable SSL certificate in hPanel
+4. After SSL is enabled, edit .htaccess and uncomment lines 9-10
+   (to force HTTPS redirect)
+
+═══════════════════════════════════════════════════════════════
+  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+Database Connection Error?
+→ Double-check credentials in config/database.php
+→ Verify database exists in phpMyAdmin
+→ Check user has proper permissions
+
+500 Internal Server Error?
+→ Check file permissions (folders: 755, files: 644)
+→ Check error logs in hPanel
+→ Verify .htaccess syntax
+
+File Upload Not Working?
+→ Check uploads/ folder permissions (755 or 775)
+→ Check PHP upload limits in Hostinger settings
+
+Page Not Found?
+→ Verify all files uploaded correctly
+→ Check if .htaccess is present
+→ Ensure correct URL path
+
+═══════════════════════════════════════════════════════════════
+  NEED HELP?
+═══════════════════════════════════════════════════════════════
+
+See DEPLOYMENT_GUIDE.md for detailed instructions
+See DEPLOYMENT_CHECKLIST.md for a step-by-step checklist
